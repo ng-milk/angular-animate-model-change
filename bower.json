@@ -1,0 +1,25 @@
+{
+  "name": "angular-animate-model-change",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ng-milk/angular-animate-model-change",
+  "authors": [
+    "Dan Mindru <mindrudan@gmail.com>"
+  ],
+  "description": "A directive that will help you animate elements when the model updates, just with CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "directive",
+    "animate",
+    "model"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ]
+}
