@@ -127,6 +127,10 @@
       border-bottom:3px solid salmon;
     }
 
+
+    /* Github fork from https://codepo8.github.io/css-fork-on-github-ribbon/ */
+    #forkongithub {display:none;}
+    #forkongithub a{background:whitesmoke;color:gray;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:white;color:black;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#D6D6D6;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:30px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);}}
   </style>
 </head>
 <body ng-app="app" ng-controller="ctrl" ng-cloak>
@@ -236,6 +240,9 @@
     <a class="btn btn-primary" href="https://github.com/ng-milk/angular-animate-model-change"><i class="fa fa-code-fork"></i> Fork on Github</a>
     <a class="btn btn-default" href="https://github.com/ng-milk/angular-animate-model-change/issues"><i class="fa fa-bug"></i> Submit an issue</a>
   </footer>
+
+  <!-- fork thing -->
+  <span id="forkongithub"><a href="https://github.com/ng-milk/angular-animate-model-change">Fork me on GitHub</a></span>
 
   <!-- Local JS -->
   <script src="dist/ng-animate-model-change.js"></script>
