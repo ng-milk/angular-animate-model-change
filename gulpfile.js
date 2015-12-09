@@ -16,7 +16,8 @@ var options = {
 
 gulp.task('scripts', function () {
   return gulp.src([options.src + '/**/*.js'])
-    .pipe(eslint())
+    .pipe(eslint(require('./eslint.json')))
+    .pipe(eslint.format())
     .pipe(uglify())
     .pipe(rename('ng-animate-model-change.js'))
     .pipe(gulp.dest(options.dist));
