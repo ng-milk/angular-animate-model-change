@@ -18,85 +18,279 @@
   <style>
     body{
       padding: 120px 60px;
-      color:white;
-
-      /* So much gradient, check out -> http://uigradients.com */
-      background: -webkit-linear-gradient(90deg, #000000 10%, #53346D 90%); /* Chrome 10+, Saf5.1+ */
-      background:    -moz-linear-gradient(90deg, #000000 10%, #53346D 90%); /* FF3.6+ */
-      background:     -ms-linear-gradient(90deg, #000000 10%, #53346D 90%); /* IE10 */
-      background:      -o-linear-gradient(90deg, #000000 10%, #53346D 90%); /* Opera 11.10+ */
-      background:         linear-gradient(90deg, #000000 10%, #53346D 90%); /* W3C */
     }
 
-    h1{
-      font-size:1.6em;
+    h2{
+      font-size:1.8em;
       font-weight: 300;
-      margin-bottom:30px;
     }
 
     h3{
       font-size:1.3em;
       font-weight:300;
+      color: gray;
+      margin-bottom:15px;
     }
 
     footer{
       margin-top:30px;
+      margin-bottom:30px;
       padding-top: 15px;
-      border-top: 1px solid rgba(48, 39, 56, 0.4);
     }
 
-    /* Change directive decrement style */
-    @todo */
+    hr{
+      margin-bottom:50px;
+    }
+
+    .lbl{
+      margin-right: 15px;
+    }
+
+    table button{
+      width:100%;
+      text-align:center;
+    }
+
+    /* Custom directive styles */
+    .custom-animate{
+      font-size: 1.2em;
+      transition:
+        0.3s color ease,
+        0.3s transform ease;
+    }
+
+    .up{
+      transition:
+        0.3s color ease,
+        0.3s transform ease;
+      color: green;
+      transform:scale(1.6);
+    }
+
+    .down{
+      transition:
+        0.3s color ease,
+        0.3s transform ease;
+      color: red;
+      transform:scale(0.8);
+    }
+
+    .string{
+      transition: 0.3s border ease;
+      border-bottom:1px solid transparent;
+      margin-bottom:20px;
+      display:inline-block;
+    }
+
+    .string--non-number{
+      transition: 0.3s border ease;
+      border-bottom: 1px solid gray;
+    }
+
+    /* Cart */
+    .cart{
+      transition:
+        0.3s color ease,
+        0.3s transform ease;
+      float:right;
+      font-size:20px;
+    }
+
+    .cart--increment{
+      color: green;
+      transform:scale(1.6);
+    }
+
+    .cart--decrement{
+      color: red;
+      transform:scale(0.8);
+    }
+
+    /* Corporate table */
+    .corp-row{
+      transition:
+        0.3s background-color ease,
+        0.3s color ease,
+        0.3s border ease;
+      border-bottom:3px solid whitesmoke;
+    }
+
+    .corp-row--increment{
+      background-color: green;
+      color: white;
+      border-bottom:3px solid yellowgreen;
+    }
+
+    .corp-row--decrement{
+      background-color: red;
+      color: white;
+      border-bottom:3px solid salmon;
+    }
+
   </style>
 </head>
-  <body ng-app="app" ng-controller="ctrl">
+<body ng-app="app" ng-controller="ctrl" ng-cloak>
 
-    <header class="col-xs-12">
-      <h1>Angular 'animate on model change' demo</h1>
-    </header>
+  <header class="col-xs-12">
+    <h2>Angular 'animate on model change' demos</h2>
+  </header>
 
-    <section class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <!-- @todo -->
-      <h3>Number as model, no config</h3>
-      <span animate-model-change model="{{sampleNumber}}">Hey</span>
-      <button ng-click="decrement()">-</button>
-      <button ng-click="increment()">+</button>
+  <section class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <h3>Number as model, no config</h3>
+    <p>
+      <span class="lbl">Current number:</span>
+      <span animate-model-change model="{{sampleNumber1}}">{{sampleNumber1}}</span>
+    </p>
 
-      <h3>Number as model, timeout config, class name</h3>
+    <button class="btn btn-default" ng-click="decrement('sampleNumber1')">-</button>
+    <button class="btn btn-default" ng-click="increment('sampleNumber1')">+</button>
+    <button class="btn btn-default" ng-click="random('sampleNumber1')">rand</button>
+    <br/><br/>
+    <p class="alert alert-warning">You don't have to add any CSS to make it work, but custom CSS animations are worth the extra work (check 'real life examples' below).</p>
+    <hr/>
 
-      <h3>Number as model, custom classes</h3>
+    <h3>Number as model with config & class</h3>
+    <p>
+      <span class="lbl">Current number:</span>
+      <span class="custom-animate" animate-model-change model="{{sampleNumber2}}" increment-class="up" decrement-class="down">{{sampleNumber2}}</span>
+    </p>
 
-      <h3>String as model, custom config</h3>
-      <span animate-model-change model="{{sampleText}}" ng-bind="sampleText"></span>
-      <button ng-click="reverseText()">reverse text</button>
-    </section>
+    <button class="btn btn-default" ng-click="decrement('sampleNumber2')">-</button>
+    <button class="btn btn-default" ng-click="increment('sampleNumber2')">+</button>
+    <button class="btn btn-default" ng-click="random('sampleNumber2')">rand</button>
+    <hr/>
 
-    <footer class="col-xs-12">
-      <a class="btn btn-primary" href="https://github.com/ng-milk/angular-animate-model-change"><i class="fa fa-code-fork"></i> Fork on Github</a>
-      <a class="btn btn-default" href="https://github.com/ng-milk/angular-animate-model-change/issues"><i class="fa fa-bug"></i> Submit an issue</a>
-    </footer>
+    <h3>String as model, custom config</h3>
+    <span animate-model-change class="string" model="{{sampleText}}" ng-bind="sampleText"></span>
+    <button class="btn btn-default" ng-click="reverseText('sampleText')">Reverse text</button>
+    <hr/>
 
-    <!-- Local JS -->
-    <script src="dist/ng-animate-model-change.js"></script>
-    <script>
-      angular
-        .module('app', ['dm.animateModelChange'])
-        .controller('ctrl', ['$scope', function($scope){
-          $scope.sampleNumber = 1;
-          $scope.sampleText = 'Can\'t decrement me!';
+    <h2>Real life examples</h2>
+    <h3>Shopping cart</h3>
+    <p>
+      <span animate-model-change class="cart" model="{{sampleNumber3}}">
+        <i class="fa fa-shopping-cart"></i>
+        {{sampleNumber3}}
+      </span>
+    </p>
 
-          $scope.increment = function increment(){
-            $scope.sampleNumber++;
-          };
+    <article class="media">
+      <section class="media-left">
+        <a href="#">
+          <img class="media-object" src="http://placehold.it/84x84">
+        </a>
+      </section>
 
-          $scope.decrement = function decrement(){
-            $scope.sampleNumber--;
-          };
+      <section class="media-body">
+        <h4 class="media-heading">Product #1</h4>
+        <p>Just a sample product. Add me to the cart!</p>
+        <button class="btn btn-default btn-sm" ng-click="increment('sampleNumber3')">Add item to cart</button>
+      </section>
+    </article>
 
-          $scope.reverseText = function reverseText(){
-            $scope.sampleText = $scope.sampleText.split('').reverse().join('');
-          };
-        }]);
-    </script>
-  </body>
+    <article class="media">
+      <section class="media-left">
+        <a href="#">
+          <img class="media-object" src="http://placehold.it/84x84">
+        </a>
+      </section>
+
+      <section class="media-body">
+        <h4 class="media-heading">Product #2</h4>
+        <p>Just a sample product. Add me to the cart!</p>
+        <button class="btn btn-default btn-sm" ng-click="increment('sampleNumber3')">Add item to cart</button>
+      </section>
+      <br/>
+      <p class="alert alert-info" ng-if="sampleNumber3 > 0">
+        <button class="btn btn-info btn-sm" ng-click="emptyCart('sampleNumber3')">Empty cart</button>
+      </p>
+    </article>
+    <hr/>
+
+    <h3>Evil corporate table</h3>
+    <table class="table">
+      <thead>
+        <th>Item</th>
+        <th>Cost</th>
+        <th>Scam value</th>
+        <th>Profit</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in tableItems" class="corp-row" animate-model-change model="{{item.scamValue}}">
+          <td ng-bind="::item.name"></td>
+          <td>${{::item.price}}</td>
+          <td>${{item.scamValue}}</td>
+          <td>${{item.scamValue - item.price}}</td>
+          <td>
+            <button class="btn btn-default btn-sm" ng-click="increaseScamValue(item)">Increase scam value</button><br/>
+            <button class="btn btn-default btn-sm" ng-click="drecreaseScamValue(item)">Decrease scam value</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer class="col-xs-12">
+    <hr/>
+    <a class="btn btn-primary" href="https://github.com/ng-milk/angular-animate-model-change"><i class="fa fa-code-fork"></i> Fork on Github</a>
+    <a class="btn btn-default" href="https://github.com/ng-milk/angular-animate-model-change/issues"><i class="fa fa-bug"></i> Submit an issue</a>
+  </footer>
+
+  <!-- Local JS -->
+  <script src="dist/ng-animate-model-change.js"></script>
+  <script>
+    angular
+      .module('app', ['dm.animateModelChange'])
+      .controller('ctrl', ['$scope', function($scope){
+        $scope.sampleNumber1 = 1;
+        $scope.sampleNumber2 = 1;
+        $scope.sampleNumber3 = 0;
+        $scope.sampleText = 'Non-number value will behave like an increment if no "nonNumberClass" is provided.';
+
+        $scope.tableItems = [
+          {
+            name: 'Fake sprockets',
+            price: 29,
+            scamValue: 50
+          },
+          {
+            name: 'Partly fresh juice',
+            price: 2,
+            scamValue: 4
+          }
+        ];
+
+        $scope.increment = function increment(key){
+          $scope[key]++;
+        };
+
+        $scope.decrement = function decrement(key){
+          if($scope[key] > 0){
+            $scope[key]--;
+          }
+        };
+
+        $scope.emptyCart = function emptyCart(key){
+          $scope[key] = 0;
+        };
+
+        $scope.random = function random(key){
+          $scope[key] = Math.floor(Math.random() * 10000) + 1;
+        };
+
+        $scope.reverseText = function reverseText(key){
+          $scope[key] = $scope[key].split('').reverse().join('');
+        };
+
+        $scope.increaseScamValue = function increaseScamValue(item){
+          item.scamValue += Math.floor(Math.random() * 10) + 1;
+        };
+
+        $scope.drecreaseScamValue = function drecreaseScamValue(item){
+          item.scamValue -= Math.floor(Math.random() * 10) + 1;
+        };
+      }]);
+  </script>
+</body>
 </html>

@@ -11,38 +11,65 @@ angular.module('dm.animateModelChange', [])
 /* #@todo
  * @param <...*> attrs.model: the model to watch for.
  * @param <Int> attrs.timeout: the amount of time after which the animation is reversed.
- * @param <String> attrs.defaultClass: the class to apply when the model is not a number (defaults to increment class).
+ * @param <String> attrs.nonNumberClass: the class to apply when the model is not a number.
  * @param <String> attrs.incrementClass: the class to apply when incrementing.
  * @param <String> attrs.decrementClass: the class to apply when decrementing.
  */
 animateModelChangeDirective.$inject = ['$timeout'];
 function animateModelChangeDirective($timeout){
   function animateModelChangeLink(scope, element, attrs){
-    var timeout = attrs.timeout || 500,
-        currentClass = element.className || 'model',
+    var timer = null,
+        timeout = attrs.timeout || 300,
+        currentClass = parseClassName(element.attr('class')) || 'model',
         incrementClass = attrs.incrementClass || currentClass + '--increment',
         decrementClass = attrs.decrementClass || currentClass + '--decrement',
-        defaultClass = incrementClass || currentClass+ '--increment';
+        nonNumberClass = attrs.nonNumberClass || currentClass + '--non-number';
+
+    function parseClassName(className){
+      var classComps = className.split(' ').filter(function(item){
+        if(!(item.indexOf('ng-') > -1)){
+          return item;
+        }
+      });
+
+      return classComps[classComps.length - 1];
+    }
 
     function modelChanged(newVal, oldVal){
       if(newVal !== oldVal){
-        var changeClass = defaultClass;
+        var changeClass = nonNumberClass;
+
+        // Clear previous timeout.
+        if(timer){
+          $timeout.cancel(timer);
+          timer = null;
+
+          // For very fast clicking to work, it's required to remove classes if a timeout is still active.
+          clearClasses();
+        }
 
         // Figure out the correct class name based on the value change.
-        if(angular.isNumber(newVal)){
-          if(newVal < oldVal){
-            changeClass = incrementClass;
-          } else {
+        if(angular.isNumber(Number(newVal)) && !isNaN(Number(newVal))){
+          if(Number(newVal) < Number(oldVal)){
             changeClass = decrementClass;
+          } else {
+            changeClass = incrementClass;
           }
         }
 
-        // Add class and set remove timeout.
+        // Add class and set a 'remove' timeout.
         element.addClass(changeClass);
-        $timeout(function removeCartNumber(){
-          element.removeClass(changeClass);
+        timer = $timeout(function removeCartNumber(){
+          clearClasses();
         }, Number(timeout));
       }
+    }
+
+    function clearClasses(){
+      // Quick fix: if pressing increment / decrement like a maniac might clear the timeout for a class while another is added (only the later will be removed). To be on the safe side, we can remove all classes.
+      element.removeClass(incrementClass);
+      element.removeClass(decrementClass);
+      element.removeClass(nonNumberClass);
     }
 
     scope.$watch(function(){ return attrs.model; }, modelChanged);
