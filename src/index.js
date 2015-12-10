@@ -8,12 +8,12 @@ angular.module('dm.animateModelChange', [])
        .directive('animateModelChange', animateModelChangeDirective);
 
 
-/* #@todo
+/*
  * @param <...*> attrs.model: the model to watch for.
  * @param <Int> attrs.timeout: the amount of time after which the animation is reversed.
- * @param <String> attrs.nonNumberClass: the class to apply when the model is not a number.
  * @param <String> attrs.incrementClass: the class to apply when incrementing.
  * @param <String> attrs.decrementClass: the class to apply when decrementing.
+* @param <String> attrs.nonNumberClass: the class to apply when the model is not a number.
  */
 animateModelChangeDirective.$inject = ['$timeout'];
 function animateModelChangeDirective($timeout){
@@ -66,7 +66,6 @@ function animateModelChangeDirective($timeout){
     }
 
     function clearClasses(){
-      // Quick fix: if pressing increment / decrement like a maniac might clear the timeout for a class while another is added (only the later will be removed). To be on the safe side, we can remove all classes.
       element.removeClass(incrementClass);
       element.removeClass(decrementClass);
       element.removeClass(nonNumberClass);

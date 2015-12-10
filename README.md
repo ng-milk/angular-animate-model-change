@@ -1,14 +1,14 @@
 # Angular 'animate on model change' directive
-@TODO ================> ![Angular animate on model change demo](https://ngmilk.rocks/content/images/2015/09/kD5cm9.gif)
+![Angular animate on model change demo](https://ngmilk.rocks/content/images/2015/12/angular-model-change-animation.gif)
 
 
-### [Quick Demo](http://ng-milk.github.io/angular-animate-model-change/)
-A directive that will help you animate elements when the model updates, just with CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).
+### [See a demo](http://ng-milk.github.io/angular-animate-model-change/)
+A directive that will help you animate elements when the model updates with some nifty CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).
 
 
 ## Usage
 1. Include `ng-animate-model-change.js`.
-@TODO ================> 2. Include `ng-animate-model-change.css`.
+2. **Optional**: Include `ng-animate-model-change.css` (just if you don't plan to add any CSS of your own).
 3. Add `dm.animateModelChange` as a dependency to your app.
 4. Profit!
 
@@ -20,35 +20,50 @@ bower install ng-animate-model-change
 ```
 
 ## Example
-See [index.html](https://github.com/ng-milk/angular-animate-model-change/blob/master/index.html) for an example.
 
-
-@TODO ================>
 ```html
 [...]
-<section help-block help-block-title="Here to help" help-block-content="Help content"></section>
+<section animate-model-change class="number" model="{{model}}"></section>
 [...]
 ```
 
-@TODO ================>
-## Title icon
-You can pass a 'title' icon to the directive via the `help-block-icon-class` attribute. In the example [index.html](https://github.com/ng-milk/angular-animate-model-change/blob/master/index.html) [font-awesome](https://fortawesome.github.io/Font-Awesome/) is used.
+...and some nice styling:
 
-```html
-<section help-block help-block-title="{{title}}" help-block-content="{{content}}" help-block-icon-class="fa fa-question-circle"></section>
+```css
+.number{
+  transition:
+    0.3s color ease,
+    0.3s transform ease;
+}
+
+.number--increment{
+  color: green;
+  transform: scale(1.6);
+}
+
+.number--decrement{
+  color: red;
+  transform: scale(0.8);
+}
 ```
 
-@TODO ================>
-## Further customization
-The class `expanded` will be appended to the directive container when the help block is toggled.
-To override the directive styles you can customize the following:
-* `.hb-row` -> the directive container
-* `.hb-row.expanded` -> the directive container when toggled
-* `.hb-title` -> the directive title
-* `.hb-content` -> the directive content
+You can see more examples in [index.html](https://github.com/ng-milk/angular-animate-model-change/blob/master/index.html).
 
-Check out [index.css](https://github.com/ng-milk/angular-animate-model-change/blob/master/src/index.css) for the full list of CSS props.
 
+## Configuration
+You can configure the the timeout duration & increment, decrement and non-number classes (for those situations when the model update is not a number).
+
+```html
+<span class="foo"
+      animate-model-change
+      model="{{sampleNumber3}}"
+      increment-class="up"
+      decrement-class="down"
+      non-number-class="unknown"
+      timeout="1000">
+  ...
+</span>
+```
 
 ## About ngmilk
 <img src="http://ngmilk.rocks/content/images/2014/10/111-1.jpg" width="200px"/>

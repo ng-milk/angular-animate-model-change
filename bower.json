@@ -5,7 +5,7 @@
   "authors": [
     "Dan Mindru <mindrudan@gmail.com>"
   ],
-  "description": "A directive that will help you animate elements when the model updates, just with CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).",
+  "description": "A directive that will help you animate elements when the model updates with some nifty CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).",
   "keywords": [
     "angular",
     "angularjs",
