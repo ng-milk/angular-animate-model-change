@@ -195,6 +195,7 @@
     "yoda": [0, "never"]
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "getComputedStyle": true
   }
 }
