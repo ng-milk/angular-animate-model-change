@@ -19,13 +19,14 @@ animateModelChangeDirective.$inject = ['$timeout'];
 function animateModelChangeDirective($timeout){
   function animateModelChangeLink(scope, element, attrs){
     var timer = null,
-    timeout = (attrs.timeout || getTransitionDuration(getComputedStyle(element[0]), attrs.$normalize)) || 300,
-    currentClass = parseClassName(element.attr('class')) || 'model',
-    incrementClass = attrs.incrementClass || currentClass + '--increment',
-    decrementClass = attrs.decrementClass || currentClass + '--decrement',
-    nonNumberClass = attrs.nonNumberClass || currentClass + '--non-number';
+        timeout = (attrs.timeout || getTransitionDuration(element[0], attrs.$normalize)) || 300,
+        currentClass = parseClassName(element.attr('class')) || 'model',
+        incrementClass = attrs.incrementClass || currentClass + '--increment',
+        decrementClass = attrs.decrementClass || currentClass + '--decrement',
+        nonNumberClass = attrs.nonNumberClass || currentClass + '--non-number';
 
     function parseClassName(className){
+      // Don't read the ng-* class names on the element.
       var classComps = className.split(' ').filter(function(item){
         if(!(item.indexOf('ng-') > -1)){
           return item;
@@ -37,7 +38,7 @@ function animateModelChangeDirective($timeout){
 
     function modelChanged(newVal, oldVal){
       if(newVal !== oldVal){
-        // The non-number class will be added by default.
+        // The non-number class will be the default value.
         var changeClass = nonNumberClass;
 
         // Clear previous timeout.
@@ -89,9 +90,10 @@ function animateModelChangeDirective($timeout){
  *
  * @return <Int>: transition duration in milliseconds.
  */
-function getTransitionDuration(computedStyle, normalize){
-  var prefixes = ' webkit moz ms o khtml'.split( ' ' ),
+function getTransitionDuration(element, normalize){
+  var prefixes = ' webkit moz ms o khtml'.split(' '),
       result = 0,
+      computedStyle = getComputedStyle(element),
       duration,
       delay,
       prefix;
