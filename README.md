@@ -3,7 +3,7 @@
 
 
 ### [See a demo](http://ng-milk.github.io/angular-animate-model-change/)
-A directive that will help you animate elements when the model updates with some nifty CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/08/animate-elements-when-a-model-changes-in-angularjs/).
+A directive that will help you animate elements when the model updates with some nifty CSS, ng-animate not needed. Read more about it [here](https://ngmilk.rocks/2015/12/18/animate-elements-when-a-model-changes-in-angularjs/).
 
 
 ## Usage
@@ -56,13 +56,33 @@ You can configure the the timeout duration & increment, decrement and non-number
 ```html
 <span class="foo"
       animate-model-change
-      model="{{sampleNumber3}}"
+      model="{{model}}"
       increment-class="up"
       decrement-class="down"
       non-number-class="unknown"
-      timeout="1000">
+      timeout="500">
   ...
 </span>
+```
+
+...and the CSS:
+```css
+.foo{
+  transition: 0.5s color ease;
+  color: black;
+}
+
+.up{
+  color: green;
+}
+
+.down{
+  color: red;
+}
+
+.unknown{
+  color: gray;
+}
 ```
 
 ## About ngmilk
